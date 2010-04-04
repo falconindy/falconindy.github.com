@@ -2,14 +2,18 @@
 title: ls /etc | more
 layout: skel
 ---
+<div id="doc" class="home_page">
 <div id="bd">
 
-	<ul id="navbar">
-		<li><a href="/">home</a></li>
-		<li><a href="/articles.html">articles</a></li>
-		<li><a href="/code.html">code</a></li>
-	</ul><br style="clear:both">
+  <ul id="navbar">
+    <li><a href="/">home</a></li>
+    <li><a href="/articles.html">articles</a></li>
+    <li><a href="/code.html">code</a></li>
+  </ul><br style="clear:both">
 
-	Hello World!
+<div style="margin-left:160px">
 
+</div>
+
+<div id="ft"></div>
 </div>
