@@ -8,30 +8,30 @@ Bash is a wonderful fully featured shell that provides a multitude of ways to cu
 
 With this handy feature, you can do a multitude of things. You can make a backup copy of a file:
 
-{% highlight :bash %}
+{% highlight bash %}
 cp /etc/mpd.conf{,~}  #Same as cp /etc/mpd.conf /etc/mpd.conf~
 {% endhighlight %}
 
 Then you can restore that file:
 
-{% highlight :bash %}
+{% highlight bash %}
 cp /etc/mpd.conf{~,}  #Same as cp /etc/mpd.conf~ /etc/mpd.conf
 {% endhighlight %}
 
 Obviously, it doesn't stop here. You can make a whole directory structure:
 
-{% highlight :bash %}
+{% highlight bash %}
 mkdir -p /squashed/{usr,opt}/{rw,ro}
 #Same as mkdir -p /squashed/usr/rw /squashed/usr/ro /squashed/opt/rw /squashed/opt/ro
 {% endhighlight %}
 Bash will expand ranges as well. You can create a zero padded range like so:
 
-{% highlight :bash %}
+{% highlight bash %}
 echo {000..100}  #Will print 000 001 002 003 ... 097 098 099 100
 {% endhighlight %}
 Ranges aren't limited to being numerical. Better yet, expressions can be the preamble and postscript to each other.
 
-{% highlight :bash %}
+{% highlight bash %}
 echo {0..9}{A..Z}   #Prints 260 strings!
 {% endhighlight %}
 
