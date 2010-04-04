@@ -1,0 +1,102 @@
+---
+title: "The Anatomy of an Old Friend"
+layout: article
+categories: articles
+---
+
+I recently reignited my interest in C after an epiphany regarding pointers. This lead to a weekend orgy of roughly 1000 SLOC to create an AUR agent based on a "similar Python solution":http://github.com/rson/slurpy that I had been using for several months. Of course, being who I am and usually shooting from the hip when it comes to coding, I roughly sketched out the program in my head and dove into it. This was, of course, a bad idea. During my second rewrite, I decided that a great way to clean up some portions of my code would be to cut back on the number of printf statements I had due to the option of color in the output. But how to do this? I decided the best route would be to create my own patterns and reimplement printf.
+
+printf is probably one of the most used functions, and exists in nearly every language (I'm looking at you, C++). However, I would bet that most programmers haven't taken the time to examine exactly how a function like printf works at a lower level. Inquiring minds want to know! To paraphrase Linus, C isn't really a programming language -- it's more like writing portable assembly. So let's take a look at a simplified version of printf in C. It should give us a good idea of how the bugger works.
+
+As per the man page, printf(3), the prototype is as follows:
+{% highlight c %}
+int printf(const char *format, ...);
+{% endhighlight %}
+
+From this, we see that printf accepts a char pointer to our format string, and an undefined number of additional arguments which are our pattern replacements. The return value is the number of characters printed. If you dig deeper, the printf family of functions are analogous to functions which take a fixed numbers of arguments and do the real work: vprintf, vfprintf, etc. These accept a va_list in place of the elipsis, with "va" being short for variable argument. The front end of printf is, as it turns out, very simple:
+
+{% highlight c %}
+int printf(const char *format, ...) {
+	va_list argp;
+	int result;
+
+	va_start(argp, format);
+	result = vprintf(stdout, format, argp);
+	va_end(argp);
+
+	return result;
+}
+{% endhighlight %}
+
+We declare a va_list to hold our arguments contained within the elipsis and an int to carry the return value from our vprintf. The calls to va_start and va_end are actually macros provided to us by the preprocessor. The first call to va_start loads our va_list, argp, with all arguments passed after our last defined argument, format. Understand that despite a va_list not being defined as a pointer, it really is just a stack pointer to our passed parameters, thus why we need to give it the name of the last defined parameter. We then pass a file descriptor, our format and va_list to the workhorse vprintf where it's parsed, and when it returns we free the va_list by calling the va_end macro.
+
+So let's look at the juicy bits of the operation. Keep in mind that this is a simplified version, which doesn't take into account things such as field width, precision, or alignment. We're also going to implement vfprintf instead of vprintf, because vprintf is nothing but a call to vfprintf with our file descriptor defaulted to stdout. Looking at our trusty man page, we see exactly what we expect from vfprintf's prototype, so let's dig into the function itself.
+
+{% highlight c %}
+int vfprintf(FILE *stream, const char *format, va_list ap) {
+
+	const char *p;
+	int count = 0;
+
+	int i;
+	char *s;
+
+{% endhighlight %}
+
+We declare a few variables here. A char pointer, which will be used to examine our format string, and a character counter initialized to zero, which keeps track of how many characters we write. The two other variables will be used with a 3rd va macro which will be introduced very shortly.
+
+{% highlight c %}
+	for (p = fmt; *p != '\0'; p++) {
+		if (*p != '%') {
+			fputc(*p, stream);
+			count++;
+			continue;
+		}
+{% endhighlight %}
+
+We establish a for loop, with our pointer initialized to the start of the format string, and ending when we reach the null terminator at the end of it. We compare each character to see if it's a percent sign, denoting the start of a pattern. When it isn't, we print the character, increment our counter, and skip on to the next character in the format. Note that unlike other functions in the fput family, fputc does not return the number of characters it wrote -- this obviously going to be one. Rather, it returns the character we printed. Because of this, we need to increment our counter separately.
+
+{% highlight c %}
+		switch (*++p) {
+		case 'c':
+			i = va_arg(ap, int);
+			fputc(i, stream);
+			count++;
+			break;
+{% endhighlight %}
+
+Within the for loop, we create a switch block on the next character after the percent sign. This is where we determine what pattern was specified in the format: was it %c, %d, %f, etc. We call our 3rd va macro, va_arg, which is told to extract the next argument from the va-list ap, and expect it to be of type int. Wait, an int? I thought we were catching a character? Well, it turns out that some promotions occur within printf. A char will always be accepted as an int, and a float will always be accepted as a double. There's no harm done by either of these promotions, and it saves us from declaring 2 extra variables. A savings of a whole 9 bytes! The rest of this block is fairly dull. It's a simple character, so pass it to fputc with our file stream, increment the counter and move on.
+
+{% highlight c %}
+		case 's':
+			s = va_arg(ap, char*);
+			count += fputs(s, stream);
+			break;
+		case 'd':
+			i = va_arg(ap, int);
+			if (i < 0) {
+				i = -i;
+				fputc('-', stream);
+				count++;
+			}
+			count += fputs(itoa(i, 10), steram);
+			break;
+{% endhighlight %}
+
+This next bit should be pretty easy to decipher, knowing how the last one worked. A %s pattern is encountered, we extract it from our va_list, and call to fputs to write it out to our stream. Notice that now we're using fputs, which returns the number of characters written to the stream, so we can easily increment our counter with the return value. A %d pattern requires a little extra effort. We're going to simplify the process by catching a negative number and converting it to a positive number, prepending the eventual output string with a unary negative. Given C's low level nature, we can't just directly print the number to stdout. We have to make it into a string. For that, we call itoa(), which accepts the number and the numerical base that its represented in. I won't detail the innards of itoa. Consult your white bible (K&amp;R2) for details. Just know that it returns a char pointer to our ascii representation of the number. We pass it to fputs and continue on.
+
+{% highlight c %}
+		case '%':
+			fputc('%', stream);
+			count++;
+			break;
+		}
+	}
+
+	return count;
+}
+{% endhighlight %}
+
+'ll finish our simple vprintf implementation with one final possibility, which is when you really do want a percent sign in your output. Can't forget that! We return our character count, and life is good. At this point, you should be able to see how easy it would be to implement other patterns, including your own custom patterns to add color to the output. This would be, of course, implementation specific and certainly not portable. You can see my full implementation at "cower's GitHub page":http://github.com/falconindy/cower. My own printf exists in util.c.
+
+I hope this little expedition was helpful in understanding the basic idea behind an every day function that helps to make a programmer's life infinitely simpler with regard to console output.
