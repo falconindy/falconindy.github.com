@@ -1,0 +1,15 @@
+---
+title: ls /etc | more
+layout: skel
+---
+<div id="bd">
+
+	<ul id="navbar">
+		<li>home</li>
+		<li>articles</li>
+		<li>code</li>
+	</ul><br style="clear:both">
+
+	Hello World!
+
+</div>
