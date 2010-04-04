@@ -124,15 +124,16 @@ dd {
   float: left;
   width: 130px;
   height: 16px;
-  padding-top: 40px;
-  text-align: left;
+  padding-top: 20px;
+  text-align: center;
   padding-left: 2px;
-  border-left: 1px solid #e9e9e9;
+  border-left:  1px solid #e9e9e9;
+  border-right: 1px solid #e9e9e9;
   text-decoration: none;
 }
 #navbar a:link,
 #navbar a:visited { color: #666; }
-#navbar a:hover   { background-color: #fcf5a7; }
+#navbar a:hover   { background-color: #eeeeee; }
 
 img.left {
 	float: left;
