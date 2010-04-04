@@ -5,10 +5,13 @@ layout: page
 These are the codebases I currently maintain.
 
 h2. SquashFu
+
 A dynamic backup solution which allows compression and an arbitrary number of incrementals. Suitable for single users. Written in Bash.
 *"repo":http://www.github.com/falconindy/squashfu*
 
+
 h2. Cower
+
 A simple AUR agent for Arch Linux with a pretentious name. Written in C.
 *"repo":http://www.github.com/falconindy/cower*
 
