@@ -1,0 +1,28 @@
+---
+title: squashfu
+layout: article
+categories: articles
+---
+
+I pulled all my hair out for nothing. A bug with Aufs which was stopping me completing my previously mentioned backup script has been determined to be upstream. Better yet, an Arch dev was kind enough to pass along a fix at least to get the mount stable on Ext4. So, without further ado, I present the very stylish, very sleek, (very beta) SquashFu. It slices! It dices! Well, okay. It just backs up data. The link to Github has full details, but a quick overview:
+
+
+h2. Requirements:
+
+* bash
+* aufs2 w/ aufs2-utils
+* squashfs-tools
+* rsync
+
+
+h2. Features:
+
+* Easy setup: Define a few variables in the config, create your backup "root", and run `sudo squashfu -B`!
+* Very reasonable compression (2.6GB squashes down to 1.7GB on my backup)
+* Flexible backup options, using rsync's include/exclude syntax
+* User defined control of incremental backups -- keep 5 or 500 (not tested with 500)
+* Fine grained control of incrementals: each individual backup is isolated in its own bin
+* Easy rollback: instant access to any backup point
+* Reporting: Detailed breakdown of disk usage for the base and each of the incrementals
+
+So far I've been running it on my own desktop as well as my server, and it's doing quite nicely. However, that isn't to say that it doesn't still have undiscovered bugs. If anyone is interested in testing it, I'd love to know how it fares, particularly on distros other than Arch. Bug reports and suggestions are welcome. Archers, here's your PKGBUILD.
