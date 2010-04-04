@@ -16,8 +16,9 @@ body {
 #sidebar_content {
   padding-top: 42px;
   padding-bottom: 8px;
-  background-repeat: repeat-x;
-  background-image: url(/images/bg_sidebar_gradient.png);
+  /* background-repeat: repeat-x;
+  background-image: url(/images/bg_sidebar_gradient.png); */
+  background-color: #eeeeee
 }
 .yui-t4 {
   background-repeat: no-repeat;
