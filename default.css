@@ -1,3 +1,69 @@
+html {
+  height: 100%;
+}
+body {
+  color: #444;
+  min-height: 100%;
+  margin-top: 0;
+}
+#hd {
+  margin-bottom: 64px;
+}
+#sidebar {
+  padding-top: 100px;
+  text-align: center;
+}
+#sidebar_content {
+  padding-top: 42px;
+  padding-bottom: 8px;
+  background-repeat: repeat-x;
+  background-image: url(/images/bg_sidebar_gradient.png);
+}
+.yui-t4 {
+  background-repeat: no-repeat;
+  background-position: right top;
+}
+
+/* --- Typography --- */
+ul {
+  padding-left: 18px;
+}
+ul.posts {
+  padding-left: 0;
+  margin-top: 0;
+}
+ul.posts li {
+  list-style-type: none;
+}
+h1 {
+  font-weight: bold;
+  width: 70%;
+  letter-spacing: -1px;
+  font-size: 257%;
+  line-height: 108%;
+  color: #000;
+  margin-bottom: 54px;
+  margin-top: 72px;
+}
+h2 {
+  color: #111;
+  font-size: 146.5%;
+  margin-top: 36px;
+}
+h3 {
+  color: #222;
+  margin-top: 28px;
+}
+a       { color: #346d94; text-decoration: none; }
+a:hover { color: #0096bf; }
+p.date {
+  color: #999;
+  font-style: italic;
+}
+dd {
+  margin-bottom: 8px;
+}
+
 /* --- Navbar --- */
 #navbar {
   margin: 0;
