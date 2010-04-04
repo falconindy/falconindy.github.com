@@ -11,11 +11,6 @@ layout: skel
     <li><a href="/code.html">code</a></li>
   </ul><br style="clear:both">
 
-<!--
-  <div id="logo_container">
-    !/images/logo_home.png!
-  </div>
--->
   <div style="margin-left:160px">
 
     <ul class="posts">{% for post in site.posts %}
