@@ -9,6 +9,7 @@ I recently reignited my interest in C after an epiphany regarding pointers. This
 printf is probably one of the most used functions, and exists in nearly every language (I'm looking at you, C++). However, I would bet that most programmers haven't taken the time to examine exactly how a function like printf works at a lower level. Inquiring minds want to know! To paraphrase Linus, C isn't really a programming language -- it's more like writing portable assembly. So let's take a look at a simplified version of printf in C. It should give us a good idea of how the bugger works.
 
 As per the man page, printf(3), the prototype is as follows:
+
 {% highlight c %}
 int printf(const char *format, ...);
 {% endhighlight %}
@@ -97,6 +98,6 @@ This next bit should be pretty easy to decipher, knowing how the last one worked
 }
 {% endhighlight %}
 
-'ll finish our simple vprintf implementation with one final possibility, which is when you really do want a percent sign in your output. Can't forget that! We return our character count, and life is good. At this point, you should be able to see how easy it would be to implement other patterns, including your own custom patterns to add color to the output. This would be, of course, implementation specific and certainly not portable. You can see my full implementation at "cower's GitHub page":http://github.com/falconindy/cower. My own printf exists in util.c.
+I'll finish our simple vprintf implementation with one final possibility, which is when you really do want a percent sign in your output. Can't forget that! We return our character count, and life is good. At this point, you should be able to see how easy it would be to implement other patterns, including your own custom patterns to add color to the output. This would be, of course, implementation specific and certainly not portable. You can see my full implementation at "cower's GitHub page":http://github.com/falconindy/cower. My own printf exists in util.c.
 
 I hope this little expedition was helpful in understanding the basic idea behind an every day function that helps to make a programmer's life infinitely simpler with regard to console output.
