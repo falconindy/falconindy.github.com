@@ -5,9 +5,9 @@ layout: skel
 <div id="bd">
 
 	<ul id="navbar">
-		<li>home</li>
-		<li>articles</li>
-		<li>code</li>
+		<li><a href="/">home</a></li>
+		<li><a href="/articles.html">articles</a></li>
+		<li><a href="/code.html">code</a></li>
 	</ul><br style="clear:both">
 
 	Hello World!
