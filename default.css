@@ -165,7 +165,7 @@ img.right {
 
 
 /* --- Syntax Highlight --- */
-code.c { font-style: normal; }
+div.highlight code.c { font-style: normal; }
 .highlight     { color: #333333; }
 .highlight .hll { background-color: #ffffcc }
 .highlight .c  { color: #999999; font-style: italic } /* Comment */
