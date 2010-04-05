@@ -127,6 +127,10 @@ img.right {
   margin-bottom: 140px;
 }
 
+#ft {
+  border-top: 1px solid #eeeeee;
+}
+
 
 /* --- Disqus Comments --- */
 #disqus_thread {
