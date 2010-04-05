@@ -50,6 +50,12 @@ ul.posts {
 ul.posts li {
   list-style-type: none;
 }
+ul.posts span {
+  color: #aaa;
+  font-family: Monaco, "Courier New", monospace;
+  font-size: 80%;
+}
+
 h1 {
   font-weight: bold;
   width: 70%;
