@@ -46,16 +46,16 @@ ul {
   padding-left: 18px;
 }
 ul.posts {
-  padding-left: 0;
+  padding-left: 0px;
 	margin-top: 0;
 }
 ul.posts li {
   list-style-type: none;
 }
 ul.posts span {
-  color: #aaa;
+  color: #444;
   font-family: Monaco, "Courier New", monospace;
-  font-size: 80%;
+  font-size: 100%;
 }
 
 h1 {
@@ -131,8 +131,8 @@ img.right {
 }
 .home_page #logo_container {
   text-align:center;
-  margin-top: 70px;
-  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 /*
