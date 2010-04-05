@@ -39,37 +39,6 @@ body {
 }
 
 
-/* --- Forms (for Informant article) --- */
-.informant_field {
-  border: none;
-	margin-bottom: 0;
-	border-bottom-width:0;
-}
-.informant_field label {
-  display: block;
-  font-weight: bold;
-}
-.informant_field .description {
-  margin-top: -8px;
-  font-size: 85%;
-}
-#car_features_field label {
-  display: inline;
-  font-weight: normal;
-}
-input, select, textarea {
-	background-color: white;
-	padding: 1px;
-	margin-bottom: 12px;
-}
-input {
-	padding: 2px;
-}
-.required {
-  color: red;
-}
-
-
 /* --- Typography --- */
 ul {
   padding-left: 18px;
