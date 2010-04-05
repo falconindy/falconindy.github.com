@@ -25,4 +25,5 @@ layout: skel
   </div>
 
 <div id="ft"></div>
+<hr noshade color="#eeeeee" />
 </div>
