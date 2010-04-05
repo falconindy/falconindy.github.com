@@ -2,7 +2,9 @@ html {
 	height: 100%;
 }
 body {
+  background-color: white;
   color: #444;
+  font: helvetica, arial, clean, sans-serif;
 	min-height: 100%;
 	margin-top: 0;
 }
