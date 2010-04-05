@@ -6,7 +6,7 @@ categories: articles
 
 I recently had the extreme pleasure of coming into possession of one of the finest keyboards ever created: the Happy Hacking Keyboard Lite. Granted, this is the little brother (fitting for me) of the infamous HHKB 2 Professional, but this little guy has me hooked. For those of you completely lost, I present to you a picture:
 
-!(center)/img/content/hhkb.jpg(HHKB Lite)!
+!(left)/img/content/hhkb.jpg(HHKB Lite)!
 
 At this point, I can only assume you, the reader, falls into 1 of two categories. Either you're a little intrigued, possibly even jealous, or you're just more confused. Allow me to try and explain. The HHKB has a few distinct features that set it apart from your normal "pedestrian" keyboard:
 
