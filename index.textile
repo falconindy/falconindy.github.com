@@ -11,6 +11,10 @@ layout: skel
     <li><a href="/code.html">code</a></li>
   </ul><br style="clear:both">
 
+  <div id="logo_container">
+    !/img/logo_home.jpg!
+  </div>
+
   <div style="margin-left:160px">
   <div style="padding:40px"></div>
 
