@@ -51,11 +51,20 @@ ul.posts {
 }
 ul.posts li {
   list-style-type: none;
+  clear: both;
 }
-ul.posts span {
-  color: #444;
+
+ul.posts span.count {
+ width: 8ex;
+ text-align: right
+}
+
+ul.posts span.dirlist {
   font-family: Monaco, "Courier New", monospace;
   font-size: 100%;
+  float: left;
+  display: block;
+  color: #444;
 }
 
 h1 {
