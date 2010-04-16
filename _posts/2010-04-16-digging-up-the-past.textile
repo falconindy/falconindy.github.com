@@ -18,20 +18,19 @@ Password:
 ...
 {% endhighlight %}
 
+What if the last command isn't exactly what you want? Suppose you're bouncing between vim, gdb, valgrind, and gcc. What if you want to recall not the last command, but the last gcc command? Easily done:
+
+{% highlight bash %}
+$ !gc
+gcc myproject.c -o .....
+{% endhighlight %}
+
 You can add to the command as well.
 
 {% highlight bash %}
 $ ls -la ~
 # Oops, I meant to grep that...
 $ !ls | grep foo
-{% endhighlight %}
-
-
-What if the last command isn't exactly what you want? Suppose you're bouncing between vim, gdb, valgrind, and gcc. What if you want to recall not the last command, but the last gcc command? Easily done:
-
-{% highlight bash %}
-$ !gc
-gcc myproject.c -o .....
 {% endhighlight %}
 
 This only works, however, for commands *starting* with the pattern passed to !. If you want to match a comannd with a pattern found anywhere, you can modify the ! with ? wildcards as such:
