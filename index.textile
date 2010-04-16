@@ -19,12 +19,12 @@ layout: skel
   <div style="margin-left:80px"> <!-- div-outer -->
 
     <ul class="posts">
-			<li><span class="dirlist">$ ls /etc | more</span></li>
-			{% for post in site.posts limit:5 %}
+      <li><span class="dirlist">$ ls /etc | more</span></li>
+      {% for post in site.posts limit:5 %}
       <li><span class="dirlist">-rwxr-x-r-x root root</span><span class="dirlist count">{{ post.content | number_of_words }}&nbsp;</span><span class="dirlist"> {{ post.date | date_to_string }} <a href="{{ post.url }}">{{ post.title }}</a></span></li>
-    	{% endfor %}
-			<li><span class="dirlist"><a href="/articles.html">----more----</a></span></li>
-		</ul>
+      {% endfor %}
+      <li><span class="dirlist"><a href="/articles.html">----more----</a></span></li>
+    </ul>
 
   </div>	<!-- /div-outer -->
 
