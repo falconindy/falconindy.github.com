@@ -1,0 +1,25 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>ls /etc/ | more (Dave Reisner)</title>
+    <link>http://blog.falconindy.com/</link>
+    <description></description>
+    <ttl>30</ttl>
+    <language>en-us</language>
+
+{% for post in site.posts %}
+    <item>
+      <title>{{ post.title }}</title>
+      <author>Dave Reisner</author>
+      <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
+      <link>http://blog.falconindy.com{{ post.url }}</link>
+      <guid>http://blog.falconindy.com{{ post.url }}</guid>
+      <description>{{ post.content | xml_escape }}</description>
+    </item>
+{% endfor %}
+
+  </channel>
+</rss>
