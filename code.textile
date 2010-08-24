@@ -15,3 +15,9 @@ h2. Cower
 A simple AUR agent for Arch Linux with a pretentious name. Written in C.
 *"repo":http://www.github.com/falconindy/cower*
 
+
+h2. Burp
+
+A simple AUR uploader for Arch Linux with cookie support. Written in C. No excuses, just burp.
+*"repo":http://www.github.com/falconindy/burp*
+
