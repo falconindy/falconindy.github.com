@@ -1,0 +1,50 @@
+---
+title: "Systemd on Arch"
+layout: article
+categories: articles
+---
+
+Recently, I've been putting a fair bit of effort into smoothing out the Systemd experience on Arch. Wait, what's Systemd? While I'll be leaving the "details":http://0pointer.de/blog/projects/systemd.html to the lead developer, Lennart Poettering, I can summarize some of the major selling points as I see them:
+
+* Fully parallelized boot
+* Daemon monitoring (like Monit)
+* Socket activation of services (like inetd)
+
+Systemd also expands its control over what PID 1 would normally oversee. Normal day to day systemd config files, such as /etc/fstab, become configfiles for Systemd to parse and generate what its calls Units. Units could be anything -- a socket, a service (daemon), a mount point, or even a device. Why would you want this? Well, consider PID 1 to be the insane conductor of the worst symphony ever assembled. Not only is the conductor insane, but he's very controlling. He wants to know that the walls are of high acoustic quality and that the lighting is effective enough for his performers to see their music. Essentially, despite his OCD, he wants to know that his whole environment is going to be conducive to getting every last bit of talent out of the high school level musicians he has to put up with. That's a long enough metaphor. What the hell is the point? Well, just like the conductor wants to fix the lighting so that the fat, half asleep tuba player in the back can see his music (and not fall asleep), you want your init to be aware of processes going awry in the background and having a domino effect on your system. Did the network just go down? Well, with it just went all your remote mounts as well. Systemd knows that your remote mounts rely on the network, so the network gets restarted followed by the remote mounts.
+
+If you're still reading, perhaps you'd be interested in trying Systemd. Perhaps you even have an Arch box you'd like to try it on! There's a real dearth of info and not much highlighting of the work I've done (it's all buried in the AUR and on GitHub), so I thought I'd outline all my tomfoolery. Maybe I'll incite one or two people to help out with polishing off the remainder of this project.
+
+There's a fair number of dependencies we need to knock out from the AUR. I'm probably going to scare a few people off when I mention that this involves a kernel compile. There's a few knobs that need to be turned from the vanilla Arch kernel, and we need to apply a patch while we're still on 2.6.35 (it's merged mainline in 2.6.36). In order, you'll want to download, build, and install the following:
+
+* "kernel26-systemd":http://aur.archlinux.org/packages.php?ID=37059
+* "libcgroup-git":http://aur.archlinux.org/packages.php?ID=36901
+* "vala-devel":http://aur.archlinux.org/packages.php?ID=38260
+* "udev-systemd":http://aur.archlinux.org/packages.php?ID=38950
+* "dbus-systemd":http://aur.archlinux.org/packages.php?ID=40399
+* "systemd-git:"http://aur.archlinux.org/packages.php?ID=36902
+
+Or really, what you should just do is:
+
+{% highlight bash %}
+cower -dd systemd-git
+{% endhighlight %}
+
+And then just build in the order above. But wait! There's one other thing that needs to be done before systemd builds correctly. You'll need to fetch the PKGBUILD for extra/docbook-xsl and make a small change, which can be summarized as:
+
+{% highlight bash %}
+sed -i 's/xhtml/&{,-1_1}/' PKGBUILD
+{% endhighlight %}
+
+Build and install as normal.
+
+After systemd is built and installed, please for the love of Arch, read Pacman's output. If you reboot now, you'll be fairly dissatisfied with the results. You won't have any daemons running, so you won't have network, syslog, cron, or any other goodies you normally have with Arch's stock setup. This means its time to introduce systemctl, the assistant to our mad conductor. As I mentioned before, normal config files become Units for systemd. Thanks to some early patchwork that Lennart accepted from myself, Systemd detects that we're running Arch at build time and sets some parameters to find our old and trusted daemon init scripts. Using systemctl, you'll be able to trigger these scripts, for example:
+
+{% highlight bash %}
+# systemctl start network.service syslog-ng.service
+{% endhighlight %}
+
+They should start right up. There's a junction right here, and you have 2 options. The first is to create the forest of /etc/rcN.d directories, where N is 0-6, and symlink these scripts into the appropriate runlevel. It should work, but you're not really taking advantage of what Systemd was meant to do. The second option is to use the native unit collection I put together: "systemd-arch-units":http://aur.archlinux.org/packages.php?ID=40419. Install this, and note Pacman's output. You can get a list of the included unit files in this package from Pacman via `pacman -Ql systemd-arch-units'. Enable the services that fit your install (and please submit unit files for services I don't have!).
+
+Whew. If you've done everything correctly, you should have a mostly functional system when you reboot. But wait! There's more! We can do better. We're still relying on Arch's stock initscripts to fork and exec a few hundred times to get our system up and running. How do we get Systemd to take over more ownership of this? There's a package for that! My most recent work has been to tear up the Arch initscripts and trade off shell script for more native units. You can find these butchered scripts in "initscripts-systemd-git":http://aur.archlinux.org/packages.php?ID=40592. A word of caution here: up until this point, you've been able to remove the init=/bin/systemd from your bootloader and fall back gracefully onto Arch's stock init SysVinit. Installing this package removes this safety net! I've only been able to test on my own (live) box and a VM, but it's been working quite well so far. Bug reports and patches are extremely welcome.
+
+At this point, your Arch box is looking a bit less Arch-like. I propose that perhaps that's a good thing. SysVinit works, and it certainly fits the Arch philosophy, but I think it's on the side of *too* simple at the cost of modern (very desirable) functionality. Systemd is in rapid development and Lennart has been very responsive to concerns that I've voiced to him. You'll soon see Systemd as the default init system in the next big releases of Fedora and OpenSUSE. There's work being done by the Debian, Gentoo, and Slackware crowds as well. While I'm not expecting this to ever make it to core repo in Arch, I'm hopeful that this gains some attention amongst the curious hackers of Arch because this is definitely worth talking about.
