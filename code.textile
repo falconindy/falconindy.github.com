@@ -14,6 +14,11 @@ h2. Cower [ C ]
 A simple AUR agent for Arch Linux with a pretentious name.
 *"repo":http://www.github.com/falconindy/cower*
 
+h2. Gobble [ Go ]
+
+Flexible package cache cleaning for Pacman.
+*"repo":http://www.github.com/falconindy/gobble*
+
 h2. SquashFu [ Bash ]
 
 A dynamic backup solution which allows compression and an arbitrary number of incrementals. Suitable for single users.
