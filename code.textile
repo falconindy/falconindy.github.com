@@ -4,20 +4,19 @@ layout: page
 ---
 These are the codebases I currently maintain.
 
-h2. SquashFu [ Bash ]
+h2. Burp [ C ]
 
-A dynamic backup solution which allows compression and an arbitrary number of incrementals. Suitable for single users.
-*"repo":http://www.github.com/falconindy/squashfu*
-
+A simple AUR uploader for Arch Linux with cookie support. No excuses, just burp.
+*"repo":http://www.github.com/falconindy/burp*
 
 h2. Cower [ C ]
 
 A simple AUR agent for Arch Linux with a pretentious name.
 *"repo":http://www.github.com/falconindy/cower*
 
+h2. SquashFu [ Bash ]
 
-h2. Burp [ C ]
+A dynamic backup solution which allows compression and an arbitrary number of incrementals. Suitable for single users.
+*"repo":http://www.github.com/falconindy/squashfu*
 
-A simple AUR uploader for Arch Linux with cookie support. No excuses, just burp.
-*"repo":http://www.github.com/falconindy/burp*
 
