@@ -40,7 +40,7 @@ Build and install as normal.
 After systemd is built and installed, please for the love of Arch, read Pacman's output. If you reboot now, you'll be fairly dissatisfied with the results. You won't have any daemons running, so you won't have network, syslog, cron, or any other goodies you normally have with Arch's stock setup. This means its time to introduce systemctl, the assistant to our mad conductor. As I mentioned before, normal config files become Units for systemd. Thanks to some early patchwork that Lennart accepted from myself, Systemd detects that we're running Arch at build time and sets some parameters to find our old and trusted daemon init scripts. Using systemctl, you'll be able to trigger these scripts, for example:
 
 {% highlight bash %}
-# systemctl start network.service syslog-ng.service
+$ sudo systemctl start network.service syslog-ng.service
 {% endhighlight %}
 
 They should start right up. There's a junction right here, and you have 2 options. The first is to create the forest of /etc/rcN.d directories, where N is 0-6, and symlink these scripts into the appropriate runlevel. It should work, but you're not really taking advantage of what Systemd was meant to do. The second option is to use the native unit collection I put together: "systemd-arch-units":http://aur.archlinux.org/packages.php?ID=40419. Install this, and note Pacman's output. You can get a list of the included unit files in this package from Pacman via `pacman -Ql systemd-arch-units'. Enable the services that fit your install (and please submit unit files for services I don't have!).
