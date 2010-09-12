@@ -21,7 +21,7 @@ There's a fair number of dependencies we need to knock out from the AUR. I'm pro
 * "vala-devel":http://aur.archlinux.org/packages.php?ID=38260
 * "udev-systemd":http://aur.archlinux.org/packages.php?ID=38950
 * "dbus-systemd":http://aur.archlinux.org/packages.php?ID=40399
-* "systemd-git:"http://aur.archlinux.org/packages.php?ID=36902
+* "systemd-git":http://aur.archlinux.org/packages.php?ID=36902
 
 Or really, what you should just do is:
 
