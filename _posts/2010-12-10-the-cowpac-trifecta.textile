@@ -18,7 +18,7 @@ Given this, I've taken the liberty of working in some new features:
 * Searching by maintainer. Not a big deal, but it wasn't at all hard to blend in.
 * Searching with regex. A little hackish because the AUR doesn't actually support this, but it works well.
 
-Long story short, I'm really happy with the new cower. Feel free to grab "cower-git":http://aur.archlinux.org/packages.php?ID=35888 and give it a whirl. I promise it's mostly stable. A new release won't be tagged until pacman 3.5 is released, and that's a few months away. I'd like to be able to get custom output formatting implemented as well. It's already started, and I have some local commits which borrowed a lot of code from expac. Wait, what the heck is expac?
+Long story short, I'm really happy with the new cower. Feel free to grab "cower-git":http://aur.archlinux.org/packages.php?ID=35888 and give it a whirl. I promise it's mostly stable. A new release won't be tagged until pacman 3.5 is released, and that's a few months away. I'd like to be able to get custom output formatting implemented as well. It's already started, and I have some local commits which borrowed a lot of code from "expac":http://aur.archlinux.org/packages.php?ID=44048. Wait, what the heck is expac?
 
 Expac is an alpm data extraction tool. Perhaps that doesn't make sense, so let's dive into a use case. You need to know the dependencies of a package, and you need it in a parseable format for a script. Okay pacman, I don't like you, and you don't like me. Let's do this.
 
