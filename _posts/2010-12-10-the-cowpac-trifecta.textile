@@ -40,7 +40,7 @@ $ expac -Ss '%r/%n %v [%k|%m]\n    %d' foo
 
 Alias it or wrap it, but print it how _you_ want it. That's how expac rolls.
 
-A few thank you's are necessary. A fellow Archer, kaitocracy, has been generous enough to host a "binary repo":http://www.kiwilight.com/cowpac/ for cower, burp, and expac, complete with frequent builds of the -git packages. It's somewhat humbling to see my little projects getting some attention. While I generally code for my own interests, I'm always happy to see that other people enjoy what I produce. I was asked to name this repo. The only thing I could come up with was cowpac, which if I may say, is awesome. My only regret is being unable to weave in burp somehow.
+A few thank you's are necessary. A fellow Archer, kaitocracy, has been generous enough to host a "binary repo":http://cowpac.kiwilight.com/ for cower, burp, and expac, complete with frequent builds of the -git packages. It's somewhat humbling to see my little projects getting some attention. While I generally code for my own interests, I'm always happy to see that other people enjoy what I produce. I was asked to name this repo. The only thing I could come up with was cowpac, which if I may say, is awesome. My only regret is being unable to weave in burp somehow.
 
 I also have to thank another Archer, "Keenerd":http://www.kmkeen.com for testing the hell out of expac and constantly reminding me that my code sucks.
 
