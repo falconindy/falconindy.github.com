@@ -14,6 +14,11 @@ h2. Cower [ C ]
 A simple AUR agent for Arch Linux with a pretentious name.
 *"repo":http://www.github.com/falconindy/cower*
 
+h2. Expac [ C ]
+
+A data extraction tool for alpm databases with a focus on flexibility.
+*"repo":http://www.github.com/falconindy/expac*
+
 h2. Gobble [ Go ]
 
 Flexible package cache cleaning for Pacman.
