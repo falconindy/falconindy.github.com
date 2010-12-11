@@ -23,7 +23,7 @@ Long story short, I'm really happy with the new cower. Feel free to grab "cower-
 Expac is an alpm data extraction tool. Perhaps that doesn't make sense, so let's dive into a use case. You need to know the dependencies of a package, and you need it in a parseable format for a script. Okay pacman, I don't like you, and you don't like me. Let's do this.
 
 {% highlight bash %}
-$ pacman -Qi cower-git | sed -n '/^Depends/s/.*://p' | while read dep; do...
+$ pacman -Qi cower | sed -n '/^Depends/s/.*://p' | while read...
 {% endhighlight %}
 
 It's mungeable, but there's a better way -- expac it.
