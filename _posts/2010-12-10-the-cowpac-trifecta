@@ -1,0 +1,46 @@
+---
+title: "The Cowpac Trifecta"
+layout: article
+categories: articles
+---
+
+Some time around the end of October, I got to the end of my rope with cower's code. The (now) legacy branch was unmaintainable. Errors were cropping up that were getting difficult to fix because the code path was absurd. The output methodology was somewhat salvaged, but still ugly. Perhaps I fall into the category of the melodramatic artist never satisfied with their own work, but I saw an opportunity to make things better. Around the time I was reading up on libcurl's multi interface, a feature request came into Github for parallelizing updates. While the multi interface didn't pan out, multiplexing requests onto threads turned out to be a valid option. I quickly dove into the pthreads library, grok'ed some examples from curl's website, and wrote a proof of concept. It worked without a hitch.
+
+After applying the logic to cower, I started on a complete rewrite. Within a month, I was using it day to day in place of the old code. Advantages? Plenty, for both me and users:
+
+* Almost entirely multi-threaded. Each request is given its own thread and works asynchronously, only pausing for alpm queries. Cower is _faster_.
+* Single file. I find it much easier to follow the logic and not have to worry about local headers this way. Cower is _more_ _maintainable_.
+* Roughly 500 less SLOC. I owe a lot of this to condensing the half dozen files into a single file. Cower is _smaller_.
+* A sane output system. I ditched the config file which greatly simplified the logic. Strings are declared up front and used as is. Ask about color once in initialization, and then never again. Cower is _more_ _readable_.
+
+Given this, I've taken the liberty of working in some new features:
+
+* Searching by maintainer. Not a big deal, but it wasn't at all hard to blend in.
+* Searching with regex. A little hackish because the AUR doesn't actually support this, but it works well.
+
+Long story short, I'm really happy with the new cower. Feel free to grab "cower-git":http://aur.archlinux.org/packages.php?ID=35888 and give it a whirl. I promise it's mostly stable. A new release won't be tagged until pacman 3.5 is released, and that's a few months away. I'd like to be able to get custom output formatting implemented as well. It's already started, and I have some local commits which borrowed a lot of code from expac. Wait, what the heck is expac?
+
+Expac is an alpm data extraction tool. Perhaps that doesn't make sense, so let's dive into a use case. You need to know the dependencies of a package, and you need it in a parseable format for a script. Okay pacman, I don't like you, and you don't like me. Let's do this.
+
+{% highlight bash %}
+$ pacman -Qi cower-git | sed -n '/^Depends/s/.*://p' | while read dep; do...
+{% endhighlight %}
+
+It's mungeable, but there's a better way -- expac it.
+
+{% highlight bash %}
+$ expac '%D' cower-git | while read dep; do ...
+{% endhighlight %}
+
+Expac basically rips out all the querying features of pacman and balls them up into a data dumper with an emphasis on flexibility. Output is described by the user, not by pacman. I think the "man page":https://github.com/falconindy/expac speaks for itself. Because expac can also do searches, you can do fun stuff with mimic'ing pacman's -Ss or -Qs flags. Ever wanted to see download/install size while searching the syncs? Now you can.
+
+{% highlight bash %}
+$ expac -Ss '%r/%n %v [%k|%m]\n    %d' foo
+{% endhighlight %}
+
+Alias it or wrap it, but print it how _you_ want it. That's how expac rolls.
+
+A few thank you's are necessary. A fellow Archer, kaitocracy, has been generous enough to host a "binary repo":http://www.kiwilight.com/cowpac/ for cower, burp, and expac, complete with frequent builds of the -git packages. It's somewhat humbling to see my little projects getting some attention. While I generally code for my own interests, I'm always happy to see that other people enjoy what I produce. I was asked to name this repo. The only thing I could come up with was cowpac, which if I may say, is awesome. My only regret is being unable to weave in burp somehow.
+
+I also have to thank another Archer, "Keenerd":http://www.kmkeen.com for testing the hell out of expac and constantly reminding me that my code sucks.
+
