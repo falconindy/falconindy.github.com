@@ -1,0 +1,41 @@
+---
+title: "What Happens in Early Userspace..."
+layout: article
+categories: articles
+---
+
+I know what you're thinking, but it doesn't stay in early userspace. If you're stuck there, then you're doing it wrong.
+
+A few months ago, the Arch developer crew put up a "Developers Wanted" sign on their door in search of devoted folks to take over the reigns on some of the in house projects: initscripts, netcfg, and ABS. I had actually applied for the initscripts job, but when I was approached by one of the developers and told that it had come down to myself and Tom Gunderson, I joyfully passed the job onto Tom. He's an extremely smart and capable hacker. I had really only applied to make sure that someone reasonable was given the spot.
+
+I had to wonder though. Why wasn't mkinitcpio on the list? Sorry Thomas, but I think its a mess. Even today, look at the "open bug reports":https://bugs.archlinux.org/index.php?string=mkinitcpio it still has. I spoke with the current maintainer directly and he stated that he was going to keep control of the project. I have plenty of respect for that if say you have the time, but I question his availability. Several bug reports which I posted patches for went untouched for months. Needless to say, I felt something needed to be done.
+
+Before I continue, a little bit about mkinitcpio from an architectural standpoint. I consider it vaguely divisible into two pieces of functionality: what happens in every day userland (creation of the initramfs image), and what happens in early userland (on the initramfs itself). /sbin/mkinitcpio heads up the creation half of this, and pulls in files from /lib/initcpio/install and /lib/initcpio/hooks. 'install' coincides with files, binaries, and modules pulled in during the creation phase. 'hooks' are added to the resultant image as is and run during bootup. The resulting image is championed by a crudely written shell script which doesn't even take advantage of ash's features (which it runs under).
+
+On a few occasions, I've sat down and tried to contend with the codebase. I understand the process just fine, but I constantly find myself pounding my desk and throwing things when I'm jumping from file tracing functions to other functions with similar names, all of which perform similar tasks. The state of the global variables in the code is a bit disturbing as well. Add in the typical "Bash" style I see in Arch's projets, mix in odd commenting choices and you've got yourself a utility which I find myself surprised to work whenever I roll out a new kernel build.
+
+I can do this. I can make it better. I've tried. I really have. But every time I sit down and start to make some small changes, I see myself in store for a full rewrite. So why not just rewrite it? Nuts to that, who has the time...
+
+A few weeks ago, this insane idea floated into my head -- the early userspace init can be written in C. There is somewhat of a sparking event, but I'm not going to go into detail. In the course of a few days, I threw together "dinit":https://github.com/falconindy/dinit which serves as a proof of concept for a compiled pid 1. I hacked up my copy of mkinitcpio and glued together an image. Would it boot? Yes! With the help of some other archers, I ironed out a few bugs. Awesome, we have a starting point.
+
+I took this last week off from work, and decided that rather than take it as a mental break, I was going to write a whole lot of Bash and C. mkinitcpio shall be reborn! No rewriting sections and hoping the maintainer accepts it. Just fucking forge on and write your own. It shall be done. It's been a long week, and I'm quite pleased to say that "geninit":https://github.com/falconindy/geninit not only works in theory, but it's currently booting my desktop and a small army of testing VMs.
+
+My design goals were/are pretty straightforward:
+
+* Be mostly compatible with mkinitcpio: keep the options and functionality largely the same. Some naming conventions will change. Your initramfs should not have the word 'kernel' in it.
+* More cleanly written: Lots of safe, best practices and commenting when logic might be unclear.
+* Faster than mkinitcpio: It's not easy to profile shell code, but mkinitcpio does a lot of unnecessary forking for things that Bash can and should do in house.
+* Maintain modular architecture: This goes in hand with the first goal, and pretty much mimics what most other early userspace image creation tools do.
+
+geninit still features things like presets and a very similar config file. mkinitcpio's hooks all had to be redone as they're not longer being run in the context of busybox, but being called as a fork/exec from the compiled pid 1. install files, now known as builders, were reworked slightly to use the new cleaner API that I've put in place.
+
+Clean Bash is what I do. I write lots of it, and I'm damn good at it. I won't hang onto any modesty on this point. I'm very knowledgable about what Bash can do in house and refuse to pass off work to an external unless it's proven necessary.
+
+Speed was important, because I hear a _lot_ of complaints about how long it takes to generate new images. My initial implementation was roughly on par with mkinitcpio. autodetect images were a bit faster, and full images a bit slower. No good. The silver bullet was, of course, thinking outside the box. mkinitcpio uses a utility from the kernel source tree called gen_init_cpio. It requires that you build a list of contets in a specific file format which is passed to this utility which then poops out an image on stdout. The problem is this: inevitably, when tracing dependencies of modules or binaries, you find duplicates. You have to check for these and avoid adding them. Checking an external file for these things requires either iteration or grep. Both are slow. There's another way. "The Gentoo Wiki":http://en.gentoo-wiki.com/wiki/Initramfs#Creating_a_Separate_File was a big help here in getting me the speed I was looking for. The tradeoff is that you end up using a few Mb of diskspace in /tmp during the process, but I think its worthwhile. It also means you're unable to create devices for the initcpio as an unprivileged user. Not an issue for me.
+
+On the modularity front: In addition to keeping the concept of "builders", I split the code into 2 pieces -- a main Bash script which lives at "/usr/sbin/geninit"https://github.com/falconindy/geninit/blob/master/geninit, and "/usr/share/geninit/geninit.api":https://github.com/falconindy/geninit/blob/master/geninit.api. The API is a public API for which "builders" (known to mkinitcpio as "install") can draw from to add files to the resultant image. The main file remains as private API. Since its Bash, I can't stop someone from using the "private" API calls, but it's a friendly suggestion.
+
+While I still consider geninit to be a bit of a beta, I'm very excited to see it come to life so quickly. Early adopters are very much appreciatedd to help iron out bugs. It's, of course, "on the AUR":http://aur.archlinux.org/packages.php?ID=48542, and available directly from Github.
+
+Happy booting!
+
