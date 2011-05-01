@@ -19,6 +19,11 @@ h2. Expac [ C ]
 A data extraction tool for alpm databases with a focus on flexibility.
 *"repo":http://www.github.com/falconindy/expac*
 
+h2. Geninit [ Bash/C ]
+
+Modular initramfs creation.
+*"repo":http://www.github.com/falconindy/geninit*
+
 h2. Gobble [ Go ]
 
 Flexible package cache cleaning for Pacman.
