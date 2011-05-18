@@ -15,13 +15,13 @@ h2. Initial Setup
 You'll need a few packages to get started: qemu-kvm, vde2, and iptables for now. You'll also, of course, want a liveCD for your favorite distro. Start by creating a qcow2 image, which will serve as the disk for your VM:
 
 {% highlight bash %}
-$ qemu-img create -f qcow2 imagename.qcow2 5G
+qemu-img create -f qcow2 imagename.qcow2 5G
 {% endhighlight %}
 
 qcow2 is the QEMU image format of choice, which supports compression, encryption, dynamic sizing, copy on write, and snapshots. There are other formats, but this is by far the winner for versatility. Creation should be instant.
 
 {% highlight bash %}
-# modprobe -a kvm-intel tun virtio
+modprobe -a kvm-intel tun virtio
 {% endhighlight %}
 
 Note that I'm using intel, but there also exists kvm-amd for you other folks. Make sure your processor actually supports this -- you can grep for 'vmx' in /proc/cpuinfo, which will hopefully return results in your processor flags. You'll also want to make sure that /dev/kvm is created with 'kvm' as group. Arch Linux provides a udev rule to do this by default. Your mileage may vary. Make sure that you add yourself to the kvm group and log out for the changes to take effect.
@@ -31,14 +31,14 @@ h2. Networking
 We're going to be using "VDE":http://vde.sourceforge.net for networking support which will essentially create an internal VLAN for our guests. Start by creating the gateway for the VLAN:
 
 {% highlight bash %}
-# vde_switch vde_switch -tap tap0 -mod 660 -group kvm -daemon
+vde_switch vde_switch -tap tap0 -mod 660 -group kvm -daemon
 {% endhighlight %}
 
 This launches vde_switch, which creates a new network device: tap0. It doesn't yet have an IP, so we'll need to assign it:
 
 {% highlight bash %}
-# ip addr add 10.0.2.1/24 dev tap0
-# ip link set dev tap0 up
+ip addr add 10.0.2.1/24 dev tap0
+ip link set dev tap0 up
 {% endhighlight %}
 
 Note that I could have picked any "RFC 4193 internal address":http://en.wikipedia.org/wiki/Private_network, just as long as its not the same network as my LAN.
@@ -46,8 +46,8 @@ Note that I could have picked any "RFC 4193 internal address":http://en.wikipedi
 With our gateway created, we need to allow traffic to forwarded properly through it:
 
 {% highlight bash %}
-# sysctl -w net.ipv4.ip_forward=1
-# iptables -t nat -A POSTROUTING -s 10.0.2.0/24 -o eth0 -j MASQUERADE
+sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -s 10.0.2.0/24 -o eth0 -j MASQUERADE
 {% endhighlight %}
 
 A few points of interest here. The first is that you'll want to add both these commands to a file that will be routinely read on bootup. I'll leave it up to the reader as an exercise as to find the distro specific and recommended location for these. The second is that the iptables rule should be allowing any traffic whose source is the same as network our gateway device's IP. The output for the rule, specified by -o, doesn't necessarily need to be defined. In the case of my laptop which sometimes uses wlan0 and sometimes usb0, I left this undefined and routing rules take care of finding the correct path.
@@ -70,17 +70,17 @@ qemu-kvm $mem $cpus $net $drive -cdrom /path/to/livecd.iso -boot d
 Note that you don't currently have the ability to acquire an address for guest's network device via DHCP. I'll cover that later as an optional feature. For now, just assign a static IP from within the guest:
 
 {% highlight bash %}
-# ip addr add 10.0.2.100/24 dev eth0
-# ip link set dev eth0 up
-# ip route add default via 10.0.2.1
-# echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
+ip addr add 10.0.2.100/24 dev eth0
+ip link set dev eth0 up
+ip route add default via 10.0.2.1
+echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 {% endhighlight %}
 
 Note how we're using the IP of the host's tap0 device as our default route, and assigning an IP on the same subnet. Install as per usual. Before rebooting, make sure that the serial console is setup. It needs to be defined in your bootloader, on the kernel command line, and possibly as a getty. There's quite a few flavors for the moving pieces here -- some simple googling should quickly lead to results.
 
 Once the serial console is setup, you can boot the VM with the -nographic option, which should happily dump output into your terminal.
 
-.h2 DHCP Server
+h2. DHCP Server
 
 Because I'm lazy, I decided that my little VLAN needs dhcp. The official ISC dhcp server is one option, and requires very little setup, but I was convinced that using dnsmasq was a better solution. It provides a lightweight DHCP server as well as DNS caching, which my desktop can benefit from as well. With dnsmasq installed from your trusty repositories, fire up your favorite editor and open /etc/dnsmasq.conf. We only need to make a few small changes. dnsmasq needs to be set to listen on addresses and/or interfaces, as well as to specify a dhcp range. My chosen settings were:
 
