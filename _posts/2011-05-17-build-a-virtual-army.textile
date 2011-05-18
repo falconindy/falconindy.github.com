@@ -31,7 +31,7 @@ h2. Networking
 We're going to be using "VDE":http://vde.sourceforge.net for networking support which will essentially create an internal VLAN for our guests. Start by creating the gateway for the VLAN:
 
 {% highlight bash %}
-vde_switch vde_switch -tap tap0 -mod 660 -group kvm -daemon
+vde_switch -tap tap0 -mod 660 -group kvm -daemon
 {% endhighlight %}
 
 This launches vde_switch, which creates a new network device: tap0. It doesn't yet have an IP, so we'll need to assign it:
