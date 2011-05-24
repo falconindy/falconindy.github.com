@@ -85,7 +85,7 @@ h2. DHCP Server
 Because I'm lazy, I decided that my little VLAN needs dhcp. The official ISC dhcp server is one option, and requires very little setup, but I was convinced that using dnsmasq was a better solution. It provides a lightweight DHCP server as well as DNS caching, which my desktop can benefit from as well. With dnsmasq installed from your trusty repositories, fire up your favorite editor and open /etc/dnsmasq.conf. We only need to make a few small changes. dnsmasq needs to be set to listen on addresses and/or interfaces, as well as to specify a dhcp range. My chosen settings were:
 
 {% highlight bash %}
-address=127.0.0.1
+listen-address=127.0.0.1
 interface=tap0
 dhcp-range=10.0.2.100,10.0.2.150,12h
 {% endhighlight %}
