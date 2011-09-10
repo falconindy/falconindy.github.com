@@ -16,7 +16,7 @@ Marissa Mayer, the Vice Preseitn of Location and Local Services gives us all a h
 
 The important takeaway from this meeting: Google culture is being "imposed" upon us. That means at the least, breakfast and lunch is served daily. Let's not mess around. This was good food, catered from a nearby shop.
 
-!/img/content/google_lunch.png(lunch)!
+!(center)/img/content/google_lunch.png(lunch)!
 
 Marissa impresses upon us the fact that they're interested in leaving as much of our current processes in place and merely bolstering our efforts with Google's resources. That's all well and good, but let's see what the future brings in terms of integration with the Googleplex.
 
@@ -26,13 +26,13 @@ Friday is seemingly back to normal with a hint of "wtf just happened?" still in 
 
 At 4pm, Tim and Nina show up with the Google crew, and with them comes food. Oh, and booze. This is a typical Friday at Google.
 
-!/img/content/google_tgif.png(tgif!)!
+!(center)/img/content/google_tgif.png(tgif!)!
 
 Cheers!
 
 In addition, there's a bit of trivia and lava lamps, USB Google desk lamps, and plush androids are awarded.
 
-!/img/content/google_lamp.png(google lamp)!
+!(center)/img/content/google_lamp.png(google lamp)!
 
 Everyone gets a t-shirt with Google from the front, and ZAGAT across the back. Awesomeness. The mood in the room is upbeat, with lots of excitement.
 
