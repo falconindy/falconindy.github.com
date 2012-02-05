@@ -29,6 +29,11 @@ h2. Gobble [ Go ]
 Flexible package cache cleaning for Pacman.
 *"repo":http://www.github.com/falconindy/gobble*
 
+h2. Nosr [ C ]
+
+An alpm database files explorer. Finds package owners for files even if they aren't installed.
+*"repo":http://www.github.com/falconindy/nosr*
+
 h2. SquashFu [ Bash ]
 
 A dynamic backup solution which allows compression and an arbitrary number of incrementals. Suitable for single users.
