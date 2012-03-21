@@ -21,13 +21,18 @@ A data extraction tool for alpm databases with a focus on flexibility.
 
 h2. Geninit [ Bash/C ]
 
-Modular initramfs creation.
+Modular initramfs creation. (obsolete, functionality merged into "mkinitcpio":http://projects.archlinux.org/mkinitcpio.git)
 *"repo":http://www.github.com/falconindy/geninit*
 
 h2. Gobble [ Go ]
 
 Flexible package cache cleaning for Pacman.
 *"repo":http://www.github.com/falconindy/gobble*
+
+h2. Modtree [ C ]
+
+Hierarchical dependency viewer for kernel modules.
+*"repo":http://www.github.com/falconindy/modtree
 
 h2. Nosr [ C ]
 
