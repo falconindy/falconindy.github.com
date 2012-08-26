@@ -1,0 +1,56 @@
+---
+title: "Back to Basics With X and systemd"
+layout: article
+categories: articles
+---
+
+This is for everyone who says that systemd doesn't work well with startx as far as maintaining an authenticated session. There's no "ck-session-launch" equivalent, sure, but it isn't needed. When you login on at a getty, you already have an authenticated session. However, if you run startx without parameters, you'll find that a new terminal is allocated -- one where you aren't authenticated. According to upstream, it's just a matter of convincing xinit (the underlying mechanism in startx) to not allocate a new TTY. How do we do that? By merely specifying passing the VT we're current on to xinit.
+
+<pre>
+<code>
+xinit -- vt01
+</code>
+</pre>
+
+And this just works -- you'll keep your authenticated session, and X is started up according to the contents of $HOME/.xinitrc.
+
+...But I'm lazy. What if I'm on tty2? Passing vt01 is going to break this -- we should pass vt02 in this case. Add some shell voodoo:
+{% highlight bash %}
+#!/bin/bash
+
+TTY=${TTY:-$(tty)}
+TTY=${TTY#/dev/}
+
+if [[ $TTY != tty* ]]; then
+  printf '==> ERROR: invalid TTY for this script\n'
+  exit 1
+fi
+
+printf -v vt 'vt%02d' "${TTY#tty}"
+
+xinit -- "$vt" "$@"
+{% endhighlight %}
+
+Now it's even easier. All we have to run is our little helper script.
+
+...But that's not quite enough. startx itself is a wrapper around xinit and performs some modicum of useful setup. So how can convince startx to do this for us?
+
+xinit is a really stupid program. It's a glorified compiled shell script with some extra signal handling. It launches 2 programs -- a server (generally X), and a client (or many clients, as described by your .xinitrc). Just as .xinitrc exists to describe the client side setup, there's another file, .xserverrc, which a user can drop in $HOME to describe the server startup behavior. You'll find the default file in /etc/X11/xinit/xserverrc. By default, it's a one liner which just runs /usr/bin/X with a couple of commands. You can probably already guess where this is going. Add $HOME/.xserverrc as the following:
+
+{% highlight bash %}
+#!/bin/bash
+
+TTY=${TTY:-$(tty)}
+TTY=${TTY#/dev/}
+
+if [[ $TTY != tty* ]]; then
+  printf '==> ERROR: invalid TTY for this script\n'
+  exit 1
+fi
+
+printf -v vt 'vt%02d' "${TTY#tty}"
+
+exec /usr/bin/X -nolisten tcp "$vt" "$@"
+{% endhighlight %}
+
+Now when you run startx, it'll start the server on the appropriate VT to keep your authenticated session, and .xinitrc continues to describe your client side behavior.
