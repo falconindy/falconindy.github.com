@@ -15,6 +15,7 @@ xinit -- vt01
 And this just works -- you'll keep your authenticated session, and X is started up according to the contents of $HOME/.xinitrc.
 
 ...But I'm lazy. What if I'm on tty2? Passing vt01 is going to break this -- we should pass vt02 in this case. Add some shell voodoo:
+
 {% highlight bash %}
 #!/bin/bash
 
