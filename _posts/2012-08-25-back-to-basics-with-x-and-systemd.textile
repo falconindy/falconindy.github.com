@@ -36,7 +36,7 @@ Now it's even easier. All we have to run is our little helper script.
 
 ...But that's not quite enough. startx itself is a wrapper around xinit and performs some modicum of useful setup. So how can convince startx to do this for us?
 
-xinit is a really stupid program. It's a glorified compiled shell script with some extra signal handling. It launches 2 programs -- a server (generally X), and a client (or many clients, as described by your .xinitrc). Just as .xinitrc exists to describe the client side setup, there's another file, .xserverrc, which a user can drop in $HOME to describe the server startup behavior. You'll find the default file in /etc/X11/xinit/xserverrc. By default, it's a one liner which just runs /usr/bin/X with a couple of commands. You can probably already guess where this is going. Add $HOME/.xserverrc as the following:
+xinit is a really stupid program. It's a glorified compiled shell script with some extra signal handling. It launches 2 programs -- a server (generally X), and a client (or many clients, as described by your .xinitrc). Just as .xinitrc exists to describe the client side setup, there's another file, .xserverrc, which a user can drop in $HOME to describe the server startup behavior. You'll find the default file in /etc/X11/xinit/xserverrc. It's a one liner which just runs /usr/bin/X with a couple of flags. You can probably already guess where this is going. Add $HOME/.xserverrc as the following:
 
 {% highlight bash %}
 #!/bin/bash
