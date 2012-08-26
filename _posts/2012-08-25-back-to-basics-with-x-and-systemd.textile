@@ -4,7 +4,7 @@ layout: article
 categories: articles
 ---
 
-This is for everyone who says that systemd doesn't work well with startx as far as maintaining an authenticated session. There's no "ck-session-launch" equivalent, sure, but it isn't needed. When you login on at a getty, you already have an authenticated session. However, if you run startx without parameters, you'll find that a new terminal is allocated -- one where you aren't authenticated. According to upstream, it's just a matter of convincing xinit (the underlying mechanism in startx) to not allocate a new TTY. How do we do that? By merely specifying passing the VT we're current on to xinit.
+This is for everyone who says that systemd doesn't work well with startx as far as maintaining an authenticated session. There's no "ck-session-launch" equivalent, sure, but it isn't needed. When you login on at a getty, you already have an authenticated session. However, if you run startx without parameters, you'll find that a new terminal is allocated -- one where you aren't authenticated. According to upstream, it's just a matter of convincing xinit (the underlying mechanism in startx) to not allocate a new TTY. How do we do that? By merely passing the VT we're current on to xinit.
 
 <pre>
 <code>
