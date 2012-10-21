@@ -32,7 +32,7 @@ Flexible package cache cleaning for Pacman.
 h2. Modtree [ C ]
 
 Hierarchical dependency viewer for kernel modules.
-*"repo":http://www.github.com/falconindy/modtree
+*"repo":http://www.github.com/falconindy/modtree*
 
 h2. Nosr [ C ]
 
