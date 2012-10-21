@@ -2,7 +2,7 @@
 title: Code
 layout: page
 ---
-These are the codebases I currently maintain.
+These are some things I've written.
 
 h2. Burp [ C ]
 
@@ -34,10 +34,15 @@ h2. Modtree [ C ]
 Hierarchical dependency viewer for kernel modules.
 *"repo":http://www.github.com/falconindy/modtree*
 
-h2. Nosr [ C ]
+h2. Pkgfile [ C ]
 
 An alpm database files explorer. Finds package owners for files even if they aren't installed.
-*"repo":http://www.github.com/falconindy/nosr*
+*"repo":http://www.github.com/falconindy/pkgfile*
+
+h2. Ponymix [ C ]
+
+Simple command line control for PulseAudio -- mostly aimed at usage by window manager keybindings.
+*"repo":http://www.github.com/falconindy/ponymix*
 
 h2. SquashFu [ Bash ]
 
