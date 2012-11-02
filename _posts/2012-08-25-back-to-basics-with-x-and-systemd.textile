@@ -55,3 +55,5 @@ exec /usr/bin/X -nolisten tcp "$vt" "$@"
 {% endhighlight %}
 
 Now when you run startx, it'll start the server on the appropriate VT to keep your authenticated session, and .xinitrc continues to describe your client side behavior.
+
+*2012/11/02 Update*: Arch Linux now provides this by default. /etc/X11/xinit/xserverrc will start your X session on XDG_VTNR, if the environment variable is set.
