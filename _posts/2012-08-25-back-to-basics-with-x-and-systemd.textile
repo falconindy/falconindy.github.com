@@ -4,6 +4,8 @@ layout: article
 categories: articles
 ---
 
+*2012/11/02 Update*: Arch Linux now provides this by default. /etc/X11/xinit/xserverrc will start your X session on XDG_VTNR, if the environment variable is set. Therefore, if you're using Arch, stop reading here and update to at least xorg-xinit 1.3.2-3.
+
 This is for everyone who says that systemd doesn't work well with startx as far as maintaining an authenticated session. There's no "ck-session-launch" equivalent, sure, but it isn't needed. When you login on at a getty, you already have an authenticated session. However, if you run startx without parameters, you'll find that a new terminal is allocated -- one where you aren't authenticated. According to upstream, it's just a matter of convincing xinit (the underlying mechanism in startx) to not allocate a new TTY. How do we do that? By merely passing the VT we're current on to xinit.
 
 <pre>
@@ -55,5 +57,3 @@ exec /usr/bin/X -nolisten tcp "$vt" "$@"
 {% endhighlight %}
 
 Now when you run startx, it'll start the server on the appropriate VT to keep your authenticated session, and .xinitrc continues to describe your client side behavior.
-
-*2012/11/02 Update*: Arch Linux now provides this by default. /etc/X11/xinit/xserverrc will start your X session on XDG_VTNR, if the environment variable is set.
