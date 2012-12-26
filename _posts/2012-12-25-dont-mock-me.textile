@@ -21,7 +21,8 @@ With these 2 things in mind, you can intercept any call which isn't a function, 
 
 This still isn't very interesting, since causing all your external commands to do nothing will probably also cause your actual code to fail. So, simply define functions with the same name as the binaries you call. Now you can set the behavior for those functions which really matter and simply leave Apron to automatically stub out the rest.
 
-With a little extra bookkeeping, Apron tracks what functions you've defined as mocks and lets you suspend and restore the mocked environment. I've written a simple "example":https://github.com/falconindy/apron/blob/master/apron-test as a test of the framework in action.
+With a little extra bookkeeping, Apron tracks what functions you've defined as mocks and lets you suspend and restore the mocked environment. I've written a simple "example":https://github.com/falconindy/apron/blob/master/mock-test as a test of the framework in action.
 
 It's likely going to take a fair bit of effort, but I'm already quite pleased with how Apron is working (even at under 100 lines of code), and I'm fairly excited about making mkinitcpio more testable on a unit level. Perhaps, in the process, someone else finds this useful too.
 
+Update: Apron supports expectations now, too. The latest "README":https://github.com/falconindy/apron/blob/master/README.md documents how to use it, and there's of course also an "example":https://github.com/falconindy/apron/blob/master/expect-test to go along with it.
