@@ -13,7 +13,7 @@ layout: skel
 
 
   <div id="logo_container">
-    !/img/logo_home.png!
+    <img src="/img/logo_home.png" />
   </div>
 
   <div style="margin-left:80px"> <!-- div-outer -->

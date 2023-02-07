@@ -4,54 +4,53 @@ layout: page
 ---
 These are some things I've written.
 
-h2. Apron [ Bash ]
+## Apron [ Bash ]
 
 A testsuite and mocking framework for bash.
-*"repo":http://www.github.com/falconindy/apron*
+[repo](http://www.github.com/falconindy/apron)
 
-h2. Burp [ C ]
+## Burp [ C ]
 
 A simple AUR uploader for Arch Linux with cookie support. No excuses, just burp.
-*"repo":http://www.github.com/falconindy/burp*
+[repo](http://www.github.com/falconindy/burp)
 
-h2. Cower [ C ]
+## Cower [ C ]
 
 A simple AUR agent for Arch Linux with a pretentious name.
-*"repo":http://www.github.com/falconindy/cower*
+[repo](http://www.github.com/falconindy/cower)
 
-h2. Expac [ C ]
+## Expac [ C ]
 
 A data extraction tool for alpm databases with a focus on flexibility.
-*"repo":http://www.github.com/falconindy/expac*
+[repo](http://www.github.com/falconindy/expac)
 
-h2. Geninit [ Bash/C ]
+## Geninit [ Bash/C ]
 
 Modular initramfs creation. (obsolete, functionality merged into "mkinitcpio":http://projects.archlinux.org/mkinitcpio.git)
-*"repo":http://www.github.com/falconindy/geninit*
+[repo](http://www.github.com/falconindy/geninit)
 
-h2. Gobble [ Go ]
+## Gobble [ Go ]
 
 Flexible package cache cleaning for Pacman.
-*"repo":http://www.github.com/falconindy/gobble*
+[repo](http://www.github.com/falconindy/gobble)
 
-h2. Modtree [ C ]
+## Modtree [ C ]
 
 Hierarchical dependency viewer for kernel modules.
-*"repo":http://www.github.com/falconindy/modtree*
+[repo](http://www.github.com/falconindy/modtree)
 
-h2. Pkgfile [ C ]
+## Pkgfile [ C ]
 
 An alpm database files explorer. Finds package owners for files even if they aren't installed.
-*"repo":http://www.github.com/falconindy/pkgfile*
+[repo](http://www.github.com/falconindy/pkgfile)
 
-h2. Ponymix [ C ]
+## Ponymix [ C ]
 
 Simple command line control for PulseAudio -- mostly aimed at usage by window manager keybindings.
-*"repo":http://www.github.com/falconindy/ponymix*
+[repo](http://www.github.com/falconindy/ponymix)
 
-h2. SquashFu [ Bash ]
+## SquashFu [ Bash ]
 
 A dynamic backup solution which allows compression and an arbitrary number of incrementals. Suitable for single users.
-*"repo":http://www.github.com/falconindy/squashfu*
-
+[repo](http://www.github.com/falconindy/squashfu)
 
